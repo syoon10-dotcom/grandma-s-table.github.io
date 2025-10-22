@@ -1,0 +1,214 @@
+/* === THEME === */
+:root{
+    --desk:#e8d7c2; --paper:#fffaf1; --paper-dots:rgba(105,78,54,.12);
+    --ink:#3a2a1f; --ink-soft:#6f5a49;
+    --accent:#7fb28a; --accent-2:#e6d9c3;
+    --tab-recipes:#cfe4c9; --tab-vocab:#d8f1e4; --tab-about:#f2e5d3;
+    --ring:0 0 0 3px rgba(127,178,138,.28); --radius:18px;
+    --shadow-lg:0 20px 60px rgba(0,0,0,.15);
+    --shadow-md:0 10px 28px rgba(0,0,0,.12);
+    --shadow-sm:0 6px 18px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;color:var(--ink);font-family:'Avenir','Helvetica Neue',Arial,sans-serif;background:var(--desk)}
+  a{color:inherit;text-decoration:none}
+  
+  /* NOTEBOOK LAYOUT */
+  .notebook{max-width:1100px;margin:32px auto 70px;position:relative;padding-left:82px}
+  .spiral{position:absolute;left:18px;top:-12px;bottom:-12px;width:46px;border-radius:22px;
+    background:
+      radial-gradient(circle at 50% 36px,#0000 18px,rgba(0,0,0,.12) 19px 25px,#0000 26px) 0 0/46px 64px,
+      radial-gradient(circle at 50% 32px,#c9b59e 0 10px,#9f876c 11px 16px,#0000 17px) 0 0/46px 64px,
+      linear-gradient(90deg,rgba(0,0,0,.06),rgba(255,255,255,.08));
+    box-shadow: inset 0 0 22px rgba(0,0,0,.12);
+  }
+  .page{
+    background:
+      radial-gradient(circle at 16px 20px, var(--paper-dots) 1px, #0000 1.5px) 0 0/22px 22px,
+      var(--paper);
+    border-radius:22px;box-shadow:var(--shadow-lg);overflow:hidden;position:relative;
+  }
+  
+  /* Tabs */
+  .tabs{position:sticky;top:14px;z-index:20;display:flex;gap:10px;padding:16px 18px 0}
+  .tab{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px 12px 0 0;
+    font-weight:800;box-shadow:var(--shadow-sm);border:1px dashed rgba(0,0,0,.08);cursor:pointer}
+  .tab span{font-size:18px}
+  .tab.recipes{background:var(--tab-recipes)}
+  .tab.vocab{background:var(--tab-vocab)}
+  .tab.about{background:var(--tab-about)}
+  
+  /* Header */
+  header.page-head{padding:18px 24px 8px;display:flex;align-items:center;justify-content:space-between;
+    position:relative;border-bottom:1px dashed rgba(0,0,0,.08)}
+  .washi{position:absolute;left:20px;top:-14px;width:120px;height:28px;
+    background:repeating-linear-gradient(45deg, rgba(242,229,211,.95) 0 8px, rgba(207,228,201,.95) 8px 16px);
+    transform:rotate(-3deg);border-radius:6px;box-shadow:var(--shadow-sm)}
+  .brand{display:flex;align-items:center;gap:12px}
+
+  h1{font-size:30px;margin:0;letter-spacing:.2px}
+  
+  .wrap{padding:6px 22px 30px}
+  section{margin:18px 0 24px}
+  .spread{background:#fffdf6;border:1px solid rgba(0,0,0,.06);border-radius:18px;box-shadow:var(--shadow-sm);padding:18px}
+  
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1.25fr .9fr;gap:16px;align-items:stretch}
+  .hero-card{background:#fffaf1;border-radius:16px;box-shadow:var(--shadow-sm);padding:18px;display:grid;grid-template-columns:1fr 1.2fr;gap:14px;align-items:center;border:1px dashed rgba(0,0,0,.06)}
+  .hero-card img{width:100%;height:210px;object-fit:cover;border-radius:14px;box-shadow:var(--shadow-sm)}
+  .note{background:#f6efdf;border:1px dashed rgba(0,0,0,.12);color:#3a2a1f;padding:14px;border-radius:14px;box-shadow:var(--shadow-sm)}
+  
+  /* Profile */
+  .profile{display:grid;grid-template-columns:1.4fr 1.2fr;gap:16px} /* 왼쪽 약간 넓힘(선택) */
+  .card{background:#fffaf1;border-radius:16px;box-shadow:var(--shadow-sm);border:1px dashed rgba(0,0,0,.08)}
+  .card img{
+    width:100%;
+    height:320px;           /* 조금 더 크게 */
+    object-fit: cover;      
+    object-position: 50% 50%;  /* 가운데 가로, 세로 15%(위로 올리기) */
+    display:block;
+  } /* 사진 크게 */
+  /* 오른쪽 카드 패딩과 줄간격 개선 */
+
+  
+  
+  /* 2) 사진 아래 텍스트(이름/지역) 간격을 조금만 줄이기 */
+  .profile .card .pad{
+    padding: 8px 14px 14px;  /* 위 패딩 14px → 8px로 */
+  }
+  
+  /* 이름/지역 사이 여백도 살짝 타이트하게 */
+  #grandma-name{ margin: 0; font-weight:800; }
+  #grandma-from{ margin: 0; }
+  .card.pad{
+    padding: 20px 23px;     /* 좌우 여백 넉넉하게 */
+    line-height: 1.55;      /* 본문 읽기 편하게 */
+  }
+  
+  /* 프로필 좌우 카드 사이 간격 넓히기 */
+  .profile{
+    display:grid;
+    grid-template-columns: 1.2fr 1.5fr; /* 텍스트 칼럼 더 넓게 */
+    gap: 22px;                           /* 카드 간 간격 증가 */
+  }
+  
+  /* 본문 문단 아래 여백 살짝 추가(선택) */
+  #grandma-about{ margin-bottom: 10px; }
+  .lead{font-weight:800;margin:0 0 6px}
+  .muted{opacity:.8}
+  blockquote{margin:12px 0 0;font-style:italic;opacity:.9}
+  
+  /* Chips */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{border:1px dashed rgba(0,0,0,.12);padding:8px 12px;border-radius:999px;background:#e6d9c3;cursor:pointer;font-weight:700}
+  .chip.active{background:var(--accent);color:#1f2a22;box-shadow:var(--shadow-sm)}
+  
+  /* Recipe cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+  .rcard{background:#fffef8;border:1px dashed rgba(0,0,0,.08);border-radius:16px;box-shadow:var(--shadow-sm);overflow:hidden;display:flex;flex-direction:column;position:relative; cursor: pointer;}
+  .rcard:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+  .corner-sticker{ pointer-events: none;}
+  .thumb{width:100%;height:160px;object-fit:cover}
+  .body{padding:14px}
+  .title{font-weight:800;margin:0 0 6px}
+  .meta{font-size:14px;color:var(--ink-soft)}
+  .tag{display:inline-block;font-size:12px;padding:4px 8px;background:#e9f5ee;border:1px dashed rgba(0,0,0,.12);border-radius:999px;margin-right:6px}
+  .corner-sticker{position:absolute;right:10px;top:10px;background:#f2e5d3;transform:rotate(6deg);padding:4px 8px;border-radius:6px;box-shadow:var(--shadow-sm);font-weight:800}
+  
+  /* Vocab */
+  .voc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+  .flip{perspective:1000px}
+  .flip-inner{position:relative;width:100%;height:140px;transform-style:preserve-3d;transition:transform .5s}
+  .flip.flipped .flip-inner{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;border-radius:14px;background:var(--paper);color:var(--ink);backface-visibility:hidden;padding:14px;border:1px dashed rgba(0,0,0,.1);box-shadow:var(--shadow-sm)}
+  .face.back{transform:rotateY(180deg)}
+  .small{font-size:13px;opacity:.75}
+  .row{display:flex;gap:8px}
+  .sbtn{border:none;border-radius:10px;padding:8px 10px;background:var(--accent);color:#1f2a22;cursor:pointer;box-shadow:var(--shadow-sm);font-weight:700}
+  .sbtn.ghost{background:#dfeede}
+  
+  /* Dialog */
+  dialog{border:none;border-radius:16px;width:min(720px,92vw);box-shadow:var(--shadow-lg);padding:0;overflow:hidden}
+  .sheet{display:grid;grid-template-columns:1.05fr 1fr}
+  .sheet img{width:100%;height:100%;object-fit:cover}
+  .pane{padding:20px;background:#fffaf1}
+  .pane h3{margin:0 0 8px}
+  .by{color:var(--ink-soft);font-size:14px;margin-bottom:10px}
+  .ingredients li{margin:2px 0}
+  .actions{display:flex;gap:10px;margin-top:14px}
+  .btn{appearance:none;border:none;cursor:pointer;border-radius:12px;padding:10px 14px;font-weight:700;box-shadow:var(--shadow-sm)}
+  .btn.primary{background:var(--accent);color:#1f2a22}
+  .btn.ghost{background:#fff}
+  
+  footer{text-align:center;color:var(--ink-soft);padding:6px 0 18px}
+  .pageno{font-size:16px;opacity:.7}
+  
+  @media (max-width:900px){
+    .notebook{padding-left:64px}
+    .hero{grid-template-columns:1fr}
+    .hero-card{grid-template-columns:1fr}
+    .profile{grid-template-columns:1fr}
+    .sheet{grid-template-columns:1fr}
+    .card img{height:360px} /* 모바일에선 조금 줄임 */
+  }
+  /* === Responsive variables === */
+:root{
+    --portrait-h-desktop: 520px;  /* Grandma portrait height on desktop */
+    --portrait-h-mobile:  360px;  /* on phones */
+    --thumb-h-desktop:    160px;  /* recipe card thumbnail */
+    --thumb-h-mobile:     140px;
+  }
+  
+  /* apply vars */
+  #grandma-photo{
+    height: var(--portrait-h-desktop);
+    width: 100%;
+    object-fit: cover;
+    object-position: 50% 45%;
+    display:block;
+  }
+  .thumb{ height: var(--thumb-h-desktop); }
+  
+  /* Touch devices: soften hover effects, bigger touch targets */
+  @media (hover: none){
+    .rcard:hover{ transform:none; box-shadow: var(--shadow-sm); }
+    .chip, .sbtn{ padding: 10px 12px; }
+    .tab span{ font-size: 16px; }
+  }
+  
+  /* Tablet and below (<= 900px) */
+  @media (max-width: 900px){
+    .notebook{ padding-left:64px; }
+    .hero{ grid-template-columns:1fr; }
+    .hero-card{ grid-template-columns:1fr; }
+  
+    /* Profile: stack */
+    .profile{ grid-template-columns:1fr; gap:14px; }
+    #grandma-photo{ height: var(--portrait-h-mobile); object-position:50% 45%; }
+    .card .pad{ padding: 12px 14px; line-height:1.55; }
+  
+    /* Recipe grid tighter columns */
+    .grid{ grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:12px; }
+    .thumb{ height: var(--thumb-h-mobile); }
+  
+    h1{ font-size:26px; }
+    .title{ font-size:16px; }
+    .meta{ font-size:13px; }
+  
+    /* Dialog goes full-screen on mobile */
+    dialog{ width: 100vw; height: 100dvh; max-width: none; border-radius:0; }
+    .sheet{ display:grid; grid-template-columns:1fr; }
+    .sheet img{ height: 40vh; }
+    .pane{ padding:16px; }
+  }
+  
+  /* Small phones (<= 480px) */
+  @media (max-width: 480px){
+    .tabs{ gap:8px; padding:12px 12px 0; }
+    .wrap{ padding: 6px 16px 24px; } /* a bit more side padding */
+  }
+  
+  /* Nice-to-have: avoid accidental zoom/tap highlights */
+  * { -webkit-tap-highlight-color: transparent; }
+  
