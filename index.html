@@ -286,31 +286,10 @@
       btn.closest('.flip').classList.toggle('flipped');
     });
 
-    // Web Speech API (Korean TTS)
-    function speakKo(text){
-      if(!('speechSynthesis' in window)) { alert('Speech not supported in this browser.'); return; }
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'ko-KR';
-      const voices = speechSynthesis.getVoices();
-      const ko = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ko'));
-      if(ko) u.voice = ko;
-      speechSynthesis.cancel();
-      speechSynthesis.speak(u);
-    }
-    document.getElementById('vocab-chips').addEventListener('click', (e)=>{
-      const chip = e.target.closest('.chip');
-      if(!chip) return; speakKo(chip.dataset.k);
-    });
-    document.getElementById('vocab-cards').addEventListener('click', (e)=>{
-      const s = e.target.closest('.sbtn.speak');
-      if(!s) return; speakKo(s.dataset.k);
-    });
-    if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
-      speechSynthesis.onvoiceschanged = () => {};
-    }
+  
     
   </script>
-  <script src="script.js" defer></script>
+  <script src="app.js" defer></script>
   
 </body>
 </html>
