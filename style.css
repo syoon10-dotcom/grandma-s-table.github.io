@@ -200,5 +200,42 @@
   
   /* Nice-to-have: avoid accidental zoom/tap highlights */
   * { -webkit-tap-highlight-color: transparent; }
+
+  /* --- Flashcard flip essentials --- */
+.voc-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap:12px }
+.flip { perspective: 1000px; position: relative; }
+.flip-inner {
+  position: relative;
+  width: 100%;
+  height: 140px;
+  transform-style: preserve-3d;
+  transition: transform .5s;
+}
+.flip.flipped .flip-inner { transform: rotateY(180deg); }
+
+.face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border-radius: 14px;
+  background: var(--paper, #fffaf1);
+  color: var(--ink, #3a2a1f);
+  backface-visibility: hidden;
+  padding: 14px;
+  border: 1px dashed rgba(0,0,0,.1);
+  box-shadow: 0 6px 18px rgba(0,0,0,.08);
+}
+.face.back { transform: rotateY(180deg); }
+
+.flipbtn { touch-action: manipulation; }
+.sbtn { user-select: none; }
+
+/* 버튼 클릭 시 부모로 클릭 전파가 올라가도 시각적 이슈 없게(선택) */
+.sbtn:active { transform: translateY(0.5px); }
+
   
   

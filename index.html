@@ -6,12 +6,9 @@
   <title>Korean Grandma’s Table • Notebook Edition</title>
   <meta name="description" content="Seok Suyeon’s Jirisan guesthouse recipes, stories, and Korean ingredient flashcards in a cute notebook UI." />
   <link rel="stylesheet" href="style.css">
-  
-
   <!-- Fonts: Avenir for all English UI -->
   <link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
-
-  
+  <meta name="theme-color" content="#e8d7c2">
 </head>
 <body>
   <div class="notebook">
@@ -20,21 +17,20 @@
       <div class="tabs">
         <a class="tab about" href="#about"><span>About</span> ✿</a>
         <a class="tab recipes" href="#recipes"><span>Recipes</span> ★</a>
-        <a class="tab vocab" href="#vocab"><span>Vocab</span></a>
+        <a class="tab vocab" href="#vocab"><span>Vocab</span> ♡</a>
       </div>
 
       <header class="page-head">
-    
         <div class="brand">
           <div class="logo" aria-hidden="true"></div>
           <h1>Korean Grandma’s Table</h1>
         </div>
-        <nav class="chips" id="filter">
-          <button class="chip active" data-filter="all">All</button>
-          <button class="chip" data-filter="soup">Soups & Stews</button>
-          <button class="chip" data-filter="banchan">Banchan</button>
-          <button class="chip" data-filter="main">Mains & Rice</button>
-          <button class="chip" data-filter="pickles">Pickles</button>
+        <nav class="chips" id="filter" aria-label="Recipe filters">
+          <button class="chip active" data-filter="all"    type="button">All</button>
+          <button class="chip" data-filter="soup"          type="button">Soups & Stews</button>
+          <button class="chip" data-filter="banchan"       type="button">Banchan</button>
+          <button class="chip" data-filter="main"          type="button">Mains & Rice</button>
+          <button class="chip" data-filter="pickles"       type="button">Pickles</button>
         </nav>
       </header>
 
@@ -42,10 +38,13 @@
         <!-- HERO -->
         <section class="spread hero" id="about" aria-label="intro">
           <article class="hero-card">
-            <img src="korean table.webp" alt="Warm Korean table" />
+            <!-- 공백이 있는 파일명은 깨질 수 있어요. 가능하면 korean-table.webp로 변경 -->
+            <img src="korean-table.webp" alt="Warm Korean table" />
             <div>
               <h2 style="margin:0 0 6px">Seok Suyeon’s Jirisan Guesthouse</h2>
-              <p style="margin:0; color:var(--ink-soft)">A small guesthouse in Hamyang near Jirisan Mountain where travelers from around the world are welcomed with home‑cooked meals. Seasonal vegetables and wild mountain herbs carry the scent of earth and slow rural rhythms.</p>
+              <p style="margin:0; color:var(--ink-soft)">
+                A small guesthouse in Hamyang near Jirisan Mountain where travelers from around the world are welcomed with home-cooked meals. Seasonal vegetables and wild mountain herbs carry the scent of earth and slow rural rhythms.
+              </p>
               <div class="note" style="margin-top:10px">Tip: Click any recipe card to open details. Click tabs above to jump sections.</div>
             </div>
           </article>
@@ -54,7 +53,7 @@
             <ul style="margin:8px 0 0; padding-left:18px">
               <li>Hobak Doenjang Soup</li>
               <li>Minari Jeon</li>
-              <li>Perilla‑Leaf Jangajji</li>
+              <li>Perilla-Leaf Jangajji</li>
             </ul>
           </aside>
         </section>
@@ -63,14 +62,14 @@
         <section class="spread">
           <div class="profile">
             <div class="card">
-              <img id="grandma-photo"
-     src="grandma3.png"
-     alt="Grandma portrait"
-     loading="eager"
-     decoding="async"
-     sizes="(max-width: 900px) 100vw, 50vw"
-     style="width:100%; object-fit:cover; object-position:50% 45%; display:block;">
-
+              <img
+                id="grandma-photo"
+                src="grandma3.png"
+                alt="Grandma portrait"
+                loading="eager"
+                decoding="async"
+                sizes="(max-width: 900px) 100vw, 50vw"
+                style="width:100%; object-fit:cover; object-position:50% 45%; display:block;">
               <div class="pad">
                 <div class="lead" id="grandma-name"></div>
                 <div class="muted" id="grandma-from"></div>
@@ -121,177 +120,15 @@
         <h4>Steps</h4>
         <ol id="detail-steps"></ol>
         <div class="actions">
-          <button class="btn ghost" id="close">Close</button>
-          <button class="btn primary" id="save">Save Favorite</button>
+          <button class="btn ghost" id="close" type="button">Close</button>
+          <button class="btn primary" id="save" type="button">Save Favorite</button>
         </div>
       </div>
     </div>
   </dialog>
 
-  <script>
-    // ====== Data: Seok Suyeon (석수연) ======
-    const grandma = {
-      name: 'Seok Suyeon (석수연)',
-      from: 'Hamyang, near Jirisan Mountain, Korea',
-      about: 'Seok Suyeon runs a small guesthouse tucked into the foothills of Jirisan. She welcomes travelers from around the world with home‑cooked meals built from local vegetables and wild mountain greens. Her cooking is seasonal, humble, and deeply fragrant — a taste of rural rhythms that she loves to share.',
-      quote: '“Nothing makes me happier than seeing someone enjoy a meal we cooked together”',
-      photo: 'grandma3.png'
-     
-    };
-
-    const recipes = [
-      { tags: 'soup', title: 'Hobak Doenjang Soup (호박된장국)', by: 'Grandma Seok', time: '20 min', image: 'hobak.jpg', ingredients: [ '2 cups anchovy‑kelp broth','1 tbsp doenjang (soybean paste, 된장)','1 Korean zucchini (애호박), sliced','1/2 block tofu, cubed','1 tsp minced garlic','Sliced scallion; pinch of gochugaru (optional)'], steps: [ 'Simmer broth with doenjang and garlic 3–4 min.','Add zucchini and tofu; cook until tender (6–7 min).','Finish with scallion and a pinch of chili flakes.' ] },
-      { tags: 'banchan', title: 'Minari Jeon (미나리전)', by: 'Grandma Seok', time: '15 min', image: 'minari.jpg', ingredients: [ '1 cup minari (미나리, water parsley), chopped','1/4 onion, thinly sliced','3 tbsp flour (or buchim garu)','1 egg','Salt & pepper; oil for pan‑frying' ], steps: [ 'Mix minari, onion, flour, egg, and seasoning to a loose batter.','Pan‑fry small rounds until golden and crisp on both sides.' ] },
-      { tags: 'main rice', title: 'Jirisan Sanchae Bibimbap (산채비빔밥)', by: 'Grandma Seok', time: '25 min', image: 'bibimbap.jpg', ingredients: [ '1 bowl steamed rice','Assorted mountain greens: gosari (고사리), chwinamul (취나물), minari (미나리), chamnamul (참나물)','1 tbsp gochujang','1 tsp sesame oil; sesame seeds','1 fried egg' ], steps: [ 'Blanch or saute each green lightly; season with salt and sesame oil.','Arrange over hot rice with fried egg and gochujang.','Mix gently before eating.' ] },
-      { tags: 'banchan pickles', title: 'Perilla Leaf Jangajji (깻잎장아찌)', by: 'Grandma Seok', time: '15 min + marinate', image: 'pickle.jpg', ingredients: [ '30 perilla leaves (깻잎)','1/3 cup soy sauce + 1/3 cup water','1 tbsp sugar or rice syrup','1 tbsp vinegar','Sliced chili & garlic (optional)' ], steps: [ 'Simmer soy sauce, water, sugar, vinegar; cool slightly.','Pour over layered perilla leaves; add chili/garlic if using.','Marinate in fridge; serve as a side with rice.' ] },
-      { tags: 'banchan', title: 'Gosari Namul (고사리나물)', by: 'Grandma Seok', time: '20 min (after soaking)', image: 'gosari.jpg', ingredients: [ 'Soaked bracken fern (고사리), drained','1 tsp minced garlic','1 tbsp soy sauce','1 tsp sesame oil','Sesame seeds' ], steps: [ 'Saute soaked gosari with garlic and soy sauce until tender.','Finish with sesame oil and seeds.' ] },
-      { tags: 'banchan', title: 'Doraji Muchim (도라지무침)', by: 'Grandma Seok', time: '15 min', image: 'doraji.jpg', ingredients: [ '200 g peeled bellflower root (도라지), julienned','1 tbsp gochujang','1 tsp sugar','1 tsp vinegar','1 tsp sesame oil; garlic to taste' ], steps: [ 'Salt and rinse doraji to remove bitterness.','Toss with gochujang, sugar, vinegar, garlic, sesame oil.' ] },
-      { tags: 'soup', title: 'Perilla‑Seed Tofu Stew (들깨두부탕)', by: 'Grandma Seok', time: '18 min', image: 'tofu.jpg', ingredients: [ '2 cups water or light broth','1/2 block soft tofu (순두부 or soft tofu)','2 tbsp ground perilla seed (들깻가루)','Sliced scallion; salt to taste' ], steps: [ 'Bring broth to a gentle boil; add tofu chunks.','Whisk in ground perilla seed; simmer briefly until creamy.','Season with salt; garnish with scallion.' ] },
-      { tags: 'rice main', title: 'Wild Herb Tofu Toss (산나물 두부무침)', by: 'Grandma Seok', time: '15 min', image: 'greens.jpg', ingredients: [ 'Soft tofu, drained and crumbled','Assorted blanched mountain greens','1 tsp sesame oil','Salt and pepper; sesame seeds' ], steps: [ 'Gently combine tofu with greens; season with salt, pepper, and sesame oil.','Serve warm or room temperature with rice.' ] }, { tags: 'banchan', title: 'Stewed Potatoes (감자조림)', by: 'Grandma Seok', time: '20 min', image: 'gamja.jpg', ingredients: [  '3 small potatoes (감자) ~500 g, peeled and 3 cm chunks',
-    '1/2 small onion, sliced (optional)', '1.5 tbsp soy sauce','1 tbsp sugar or rice syrup (조청)','1 cup water','1 tsp minced garlic','1 tsp sesame oil','1 tsp sesame seeds',
-    'Sliced green onion; pinch of gochugaru (optional)' ], steps: [ 'Potatoes in a pan with water, soy sauce, sugar, and garlic. Bring to a boil over medium-high.','Add onion if using; lower to medium. Simmer 10–12 min until potatoes are tender and liquid is half reduced.','Increase heat slightly and stir gently to glaze until sauce thickens and coats potatoes (2–3 min).','Turn off heat; finish with sesame oil and sesame seeds. Garnish with green onion and a pinch of gochugaru.'] }
-    ];
-
-    const vocab = [
-      {k:'애호박', e:'korean zucchini (hobak)', hint:'soups, stir‑fries'},
-      {k:'미나리', e:'water parsley (minari)', hint:'fresh, herbal; pancakes & salads'},
-      {k:'참나물', e:'korean wild chervil (cham-namul)', hint:'spring herb; namul'},
-      {k:'산나물', e:'mountain greens (san-namul)', hint:'assorted wild greens'},
-      {k:'고사리', e:'bracken fern (gosari)', hint:'bibimbap classic'},
-      {k:'취나물', e:'aster scaber (chwi-namul)', hint:'fragrant wild green'},
-      {k:'두릅', e:'aralia shoots (durub)', hint:'spring shoots, blanched'},
-      {k:'도라지', e:'bellflower root (doraji)', hint:'crisp & slightly bitter'},
-      {k:'더덕', e:'deodeok', hint:'grill or muchim'},
-      {k:'들깻가루', e:'ground perilla seed', hint:'nutty, creamy soups'},
-      {k:'들기름', e:'perilla oil', hint:'finishing oil'},
-      {k:'깻잎', e:'perilla leaf', hint:'wraps & pickles'},
-      {k:'된장', e:'soybean paste (doenjang)', hint:'soups & seasoning'},
-      {k:'고추장', e:'sweet spicy past (gochujang)'},
-      {k:'고춧가루', e:'chili flakes (gochugaru)'},
-      {k:'국간장', e:'soup soy sauce', hint:'lighter, for soups'},
-      {k:'멸치', e:'dried anchovy (myeol-chi)', hint:'stock base'},
-      {k:'다시마', e:'kelp (dashima)', hint:'broth with anchovy'},
-      {k:'쑥', e:'mugwort (ssuk)', hint:'pancakes & rice cakes'},
-      {k:'반찬', e:'sidedish (banchan)'},
-      {k:'메밀', e:'buckwheat (memil)', hint:'noodles & pancakes'},
-      {k:'손두부', e:'handmade tofu', hint:'soft texture'},
-      {k:'장아찌', e:'pickles (jangajji)', hint:'soy‑brined vegetables'},
-      {k:'지리산', e:'Mount Jiri', hint:'national park; region'},
-    
-    ];
-
-    // ====== Build Grandma UI ======
-    document.getElementById('grandma-name').textContent = grandma.name;
-    document.getElementById('grandma-from').textContent = grandma.from;
-    document.getElementById('grandma-about').textContent = grandma.about;
-    document.getElementById('grandma-quote').textContent = grandma.quote;
-    document.getElementById('grandma-photo').src = grandma.photo;
-
-    // ====== Build recipes ======
-    const cardsRoot = document.getElementById('cards');
-    function labelFromTag(t){
-      if(!t) return 'Recipe';
-      if(t.includes('soup')) return 'Soups & Stews';
-      if(t.includes('banchan')) return 'Banchan';
-      if(t.includes('noodle')) return 'Noodles';
-      if(t.includes('sweet')) return 'Desserts';
-      if(t.includes('main') || t.includes('rice')) return 'Mains & Rice';
-      if(t.includes('pickles')) return 'Pickles';
-      return 'Recipe';
-    }
-    function cardHTML(r){
-      return `
-        <article class="rcard" data-tags="${r.tags}" data-title="${r.title}" data-by="${r.by}" data-time="${r.time}" data-image="${r.image}">
-          <div class="corner-sticker">★</div>
-          <img class="thumb" src="${r.image}" alt="${r.title}" />
-          <div class="body">
-            <p class="title">${r.title}</p>
-            <p class="meta">${labelFromTag(r.tags)} · ${r.time} · ${r.by}</p>
-            <div>${(r.tags||'').split(' ').map(t=>`<span class="tag">${t}</span>`).join('')}</div>
-          </div>
-        </article>`;
-    }
-    cardsRoot.innerHTML = recipes.map(cardHTML).join('');
-
-    // ====== Filtering ======
-    const chips = document.querySelectorAll('.chip');
-    const cardEls = () => Array.from(document.querySelectorAll('.rcard'));
-    chips.forEach(ch => ch.addEventListener('click', () => {
-      chips.forEach(c => c.classList.remove('active'));
-      ch.classList.add('active');
-      const k = ch.dataset.filter;
-      cardEls().forEach(card => { card.style.display = (k === 'all' || card.dataset.tags.includes(k)) ? '' : 'none'; });
-    }));
-
-    // ====== Detail dialog ======
-    const dlg = document.getElementById('detail');
-    const dTitle = document.getElementById('detail-title');
-    const dBy = document.getElementById('detail-by');
-    const dImg = document.getElementById('detail-img');
-    const dIngs = document.getElementById('detail-ings');
-    const dSteps = document.getElementById('detail-steps');
-
-    cardsRoot.addEventListener('click', (e) => {
-      const card = e.target.closest('.rcard');
-      if(!card) return;
-      const r = recipes.find(x => x.title === card.dataset.title) || {};
-      dTitle.textContent = r.title || card.dataset.title;
-      dBy.textContent = `${r.by || card.dataset.by} · ${r.time || card.dataset.time}`;
-      dImg.src = r.image || card.dataset.image; dImg.alt = r.title || card.dataset.title;
-      dIngs.innerHTML = (r.ingredients||[]).map(i=>`<li>${i}</li>`).join('');
-      dSteps.innerHTML = (r.steps||[]).map(s=>`<li>${s}</li>`).join('');
-      dlg.showModal();
-    });
-    document.getElementById('close').addEventListener('click', () => dlg.close());
-
-    // ====== Save (localStorage demo) ======
-    document.getElementById('save').addEventListener('click', () => {
-      const key = 'fav:' + dTitle.textContent;
-      localStorage.setItem(key, JSON.stringify({ title: dTitle.textContent, by: dBy.textContent, image: dImg.src, ts: Date.now() }));
-      alert('Saved to favorites.');
-    });
-
-    // ====== Vocab ======
-    const chipsRoot = document.getElementById('vocab-chips');
-    const list = document.getElementById('vocab-cards');
-    chipsRoot.innerHTML = vocab.map(v=>`<button class="chip" style="background:#e9f5ee" data-k="${v.k}" data-e="${v.e}">${v.k} (${v.e})</button>`).join('');
-    vocab.forEach(v => {
-      const wrap = document.createElement('div');
-      wrap.className = 'flip';
-      wrap.innerHTML = `
-        <div class="flip-inner">
-          <div class="face front">
-            <div style="font-size:24px; font-weight:800">${v.k}</div>
-            <div class="small">Tap to flip · Speak</div>
-            <div class="row">
-              <button class="sbtn speak" data-k="${v.k}">Speak</button>
-              <button class="sbtn ghost flipbtn">Flip</button>
-            </div>
-          </div>
-          <div class="face back">
-            <div style="font-size:18px; font-weight:800">${v.e}</div>
-            <div class="small">${v.hint||''}</div>
-            <div class="row">
-              <button class="sbtn speak" data-k="${v.k}">Speak</button>
-              <button class="sbtn ghost flipbtn">Flip</button>
-            </div>
-          </div>
-        </div>`;
-      list.appendChild(wrap);
-    });
-
-    list.addEventListener('click', (e)=>{
-      const btn = e.target.closest('.flipbtn');
-      if(!btn) return;
-      btn.closest('.flip').classList.toggle('flipped');
-    });
-
-  
-    
-  </script>
+  <!-- 인라인 스크립트는 전부 제거하고 app.js만 유지 -->
   <script src="app.js" defer></script>
-  
+  <noscript>This site needs JavaScript enabled.</noscript>
 </body>
 </html>
-
-
