@@ -200,24 +200,81 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.closest('.flip').classList.toggle('flipped');
     });
   
-    // Web Speech API (Korean TTS)
-    function speakKo(text){
-      if(!('speechSynthesis' in window)) { alert('Speech not supported in this browser.'); return; }
+  // ====== Korean TTS: force female voice when possible ======
+(function setupKoreanTTS(){
+  let cachedVoice = null;
+
+  // 기기별로 흔한 여성 한국어 보이스 후보들 (우선순위 높은 순)
+  const PREFERRED_KO_FEMALE = [
+    // iOS / macOS (Siri)
+    'Yuna', 'Nari', 'Sora',
+    // Windows / Edge / Microsoft
+    'Microsoft Heami Online', 'Heami', 'SunHi',
+    // Google Chrome (Google voices)
+    'Google 한국의 여자', 'Google 한국어 여성', 'ko-KR-Standard-A', 'ko-KR-Wavenet-A',
+    // 기타 표기 패턴
+    'Female', '여자', 'female'
+  ];
+
+  function pickKoreanFemaleVoice() {
+    const voices = speechSynthesis.getVoices() || [];
+
+    // 1) ko-KR만 추리기
+    const ko = voices.filter(v => (v.lang || '').toLowerCase().startsWith('ko'));
+
+    // 2) 이름 패턴으로 여성 우선 선택
+    for (const wanted of PREFERRED_KO_FEMALE) {
+      const found = ko.find(v => (v.name || '').toLowerCase().includes(wanted.toLowerCase()));
+      if (found) return found;
+    }
+
+    // 3) 이름에 'female/여자'가 없더라도, ko-KR 중 첫 번째 선택
+    if (ko.length) return ko[0];
+
+    // 4) 최후: 전체 중 ko 언어 비슷한 것 or 첫 번째
+    return voices.find(v => (v.lang || '').toLowerCase().startsWith('ko')) || voices[0] || null;
+  }
+
+  function ensureVoiceReady(cb){
+    // 크롬은 voices 목록이 늦게 로드되기도 함
+    const tryPick = () => {
+      if (!cachedVoice) cachedVoice = pickKoreanFemaleVoice();
+      if (cachedVoice) cb();
+    };
+    const voices = speechSynthesis.getVoices();
+    if (voices && voices.length) {
+      tryPick();
+    } else {
+      // 목록이 아직이면 이벤트로 다시 시도
+      speechSynthesis.onvoiceschanged = () => tryPick();
+      // 혹시를 위해 지연 재시도 한 번 더
+      setTimeout(tryPick, 300);
+    }
+  }
+
+  // 외부에서 호출하는 함수 (이름은 동일 유지)
+  window.speakKo = function(text){
+    if(!('speechSynthesis' in window)) { alert('Speech not supported in this browser.'); return; }
+    ensureVoiceReady(() => {
       const u = new SpeechSynthesisUtterance(text);
       u.lang = 'ko-KR';
-      const voices = speechSynthesis.getVoices();
-      const ko = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ko'));
-      if(ko) u.voice = ko;
+      if (cachedVoice) u.voice = cachedVoice;
+
+      // 톤/속도 약간 부드럽게(원하면 조절)
+      u.pitch = 1.05;   // 살짝 높게
+      u.rate  = 1.0;    // 보통 속도
+
       speechSynthesis.cancel();
       speechSynthesis.speak(u);
-    }
-    document.getElementById('vocab-chips').addEventListener('click', (e)=>{
-      const chip = e.target.closest('.chip');
-      if(!chip) return; speakKo(chip.dataset.k);
     });
-    document.getElementById('vocab-cards').addEventListener('click', (e)=>{
-      const s = e.target.closest('.sbtn.speak');
-      if(!s) return; speakKo(s.dataset.k);
-    });
+  };
+  document.getElementById('vocab-chips').addEventListener('click', (e)=>{
+    const chip = e.target.closest('.chip');
+    if(!chip) return; speakKo(chip.dataset.k);
   });
-  
+  document.getElementById('vocab-cards').addEventListener('click', (e)=>{
+    const s = e.target.closest('.sbtn.speak');
+    if(!s) return; speakKo(s.dataset.k);
+  });
+})();
+});
