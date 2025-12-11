@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // ====== Data: Seok Suyeon (석수연) ======
+  
   const grandma = {
     name: 'Seok Suyeon (석수연)',
     from: 'Hamyang, near Mount Jiri, Korea',
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ingredients:['Soft tofu, drained and crumbled','Assorted blanched mountain greens','1 tsp sesame oil','Salt and pepper; sesame seeds'],
       steps:['Gently combine tofu with greens; season with salt, pepper, and sesame oil.','Serve warm or room temperature with rice.']
     },
-    /* ➕ 새 카드: 감자조림 */
+   
     { tags:'banchan', title:'Stewed Potatoes (감자조림)', by:'Grandma Seok', time:'20 min',
       image:'gamja.jpg',
       ingredients:[
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     {k:'지리산', e:'Jirisan', hint:'national park; region'}
   ];
 
-  // ====== Build Grandma UI ======
+
   document.getElementById('grandma-name').textContent = grandma.name;
   document.getElementById('grandma-from').textContent = grandma.from;
   document.getElementById('grandma-about').textContent = grandma.about;
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
   gimg.src = grandma.photo;
   gimg.onerror = () => { gimg.src = 'placeholder.jpg'; };
 
-  // ====== Build recipes ======
+  
   const cardsRoot = document.getElementById('cards');
   function labelFromTag(t){
     if(!t) return 'Recipe';
@@ -150,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   cardsRoot.innerHTML = recipes.map(cardHTML).join('');
 
-  // ====== Filtering ======
+ 
   const chips = document.querySelectorAll('.chip');
   const cardEls = () => Array.from(document.querySelectorAll('.rcard'));
   chips.forEach(ch => ch.addEventListener('click', () => {
@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }));
 
-  // ====== Detail dialog ======
+  
   const dlg   = document.getElementById('detail');
   const dTitle= document.getElementById('detail-title');
   const dBy   = document.getElementById('detail-by');
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('close').addEventListener('click', () => dlg.close());
 
-  // ====== Vocab ======
+
   const chipsRoot = document.getElementById('vocab-chips');
   const list = document.getElementById('vocab-cards');
   const vocabBtns = vocab.map(v=>`<button class="chip" style="background:#e9f5ee" data-k="${v.k}" data-e="${v.e}">${v.k} (${v.e})</button>`).join('');
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
   vocab.forEach(v => {
     const wrap = document.createElement('div');
     wrap.className = 'flip';
-    wrap.tabIndex = 0; // keyboard focus
+    wrap.tabIndex = 0; 
     wrap.innerHTML = `
       <div class="flip-inner">
         <div class="face front">
@@ -215,31 +215,30 @@ document.addEventListener('DOMContentLoaded', () => {
     list.appendChild(wrap);
   });
 
-  // ---- Flip & Speak handlers ----
-  // 칩에서 발음
+ 
   chipsRoot.addEventListener('click', (e)=>{
     const chip = e.target.closest('.chip');
     if (!chip) return;
     speakKo(chip.dataset.k);
   });
 
-  // 카드에서: 버튼만 동작하도록(다른 곳 클릭해도 뒤집히지 않게)
+  
   list.addEventListener('click', (e)=>{
-    // 1) Speak 버튼
+   
     const speakBtn = e.target.closest('.sbtn.speak');
     if (speakBtn) { speakKo(speakBtn.dataset.k); return; }
 
-    // 2) Flip 버튼만 카드 뒤집기
+  
     const flipBtn = e.target.closest('.flipbtn');
     if (flipBtn) {
       e.preventDefault();
       e.stopPropagation();
       flipBtn.closest('.flip').classList.toggle('flipped');
     }
-    // 그 외 클릭은 무시 (카드 아무 곳 눌러도 더 이상 뒤집히지 않음)
+    
   });
 
-  // 키보드 접근성: Flip 버튼 포커스 상태에서 Enter/Space 로 토글
+
   list.addEventListener('keydown', (e)=>{
     const flipBtn = e.target.closest('.flipbtn');
     if (flipBtn && (e.key === 'Enter' || e.key === ' ')) {
@@ -248,13 +247,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // ====== Korean TTS: force female voice when possible ======
   (function setupKoreanTTS(){
     let cachedVoice = null;
 
     const PREFERRED_KO_FEMALE = [
-      'Yuna','Nari','Sora',                        // Apple
-      'Microsoft Heami Online','Heami','SunHi',   // Microsoft
+      'Yuna','Nari','Sora',                       
+      'Microsoft Heami Online','Heami','SunHi',   
       'Google 한국의 여자','Google 한국어 여성','ko-KR-Standard-A','ko-KR-Wavenet-A',
       'Female','여자','female'
     ];
@@ -284,14 +282,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    // 외부에서 호출하는 함수
+   
     window.speakKo = function(text){
       if(!('speechSynthesis' in window)) { alert('Speech not supported in this browser.'); return; }
       ensureVoiceReady(() => {
         const u = new SpeechSynthesisUtterance(text);
         u.lang = 'ko-KR';
 
-        // 실행 시점에도 한 번 더 여성 우선 보이스 탐색
+    
         const voices = speechSynthesis.getVoices() || [];
         const female = voices.find(v =>
           (v.lang||'').toLowerCase().startsWith('ko') &&
